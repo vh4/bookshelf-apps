@@ -23,9 +23,17 @@ jobs:
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
+    - run: |
+        git fetch --prune --unshallow      
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install
-    - run: node index.js
-
+    - name: Deploy to heroku
+      env:
+        HEROKU_DEPLOY_SECRET: ${{secrets.HEROKU_DEPLOY_SECRET}}
+        HEROKU_APP_NAME: ${{secrets.HEROKU_APP_NAME}}
+      if: github.ref == 'refs/heads/bookshelf-apps' && job.status == 'success'
+      run: |
+        git remote add heroku https://heroku:$HEROKU_DEPLOY_SECRET@git.heroku.com/$HEROKU_APP_NAME.git
+        git push heroku HEAD:bookshelf-apps -f    

@@ -42,23 +42,23 @@
 	})
 
     function FilterBooks(Title){
-        // const query = Title ? bookshelf.filter(function(e){return e.title.toLowerCase().includes(Title.toLowerCase())}) : bookshelf
+        const query = Title ? bookshelf.filter(function(e){return e.title.toLowerCase().includes(Title.toLowerCase())}) : bookshelf
         
-        // const uncompletedRead = document.getElementById("incompleteBookshelfList")
-		// uncompletedRead.innerHTML = ''
+        const uncompletedRead = document.getElementById("incompleteBookshelfList")
+		uncompletedRead.innerHTML = ''
 
-		// const completedRead = document.getElementById("completeBookshelfList")
-		// completedRead.innerHTML = ''
+		const completedRead = document.getElementById("completeBookshelfList")
+		completedRead.innerHTML = ''
         
-        // for (const books of query) {
-		// 	const bookElement = makeBook(books)
-        //     if(!books.isComplete) {
-        //         uncompletedRead.append(bookElement)
-        //     }
-        //     else{
-        //         completedRead.append(bookElement)
-        //     }
-		// }
+        for (const books of query) {
+			const bookElement = makeBook(books)
+            if(!books.isComplete) {
+                uncompletedRead.append(bookElement)
+            }
+            else{
+                completedRead.append(bookElement)
+            }
+		}
     }
 
     
