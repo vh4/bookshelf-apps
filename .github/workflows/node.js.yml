@@ -25,9 +25,6 @@ jobs:
       uses: actions/setup-node@v3
     - run: |
         git fetch --prune --unshallow      
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
     - run: npm install
     - name: Deploy to heroku
       env:
