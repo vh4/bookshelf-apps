@@ -1,0 +1,27 @@
+name: Javascript application
+
+on:
+  push:
+    branches: [ "bookshelf-apps" ]
+  pull_request:
+    branches: [ "bookshelf-apps" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - run: |
+        git fetch --prune --unshallow
+    - name: Deploy to heroku
+      env:
+        HEROKU_DEPLOY_SECRET: ${{secrets.HEROKU_DEPLOY_SECRET}}
+        HEROKU_APP_NAME: ${{secrets.HEROKU_APP_NAME}}
+      if: github.ref == 'refs/heads/bookshelf-apps' && job.status == 'success'
+      run: |
+        git remote add heroku https://heroku:$HEROKU_DEPLOY_SECRET@git.heroku.com/$HEROKU_APP_NAME.git
+        git push heroku HEAD:master -f
