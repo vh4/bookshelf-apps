@@ -25,7 +25,7 @@ jobs:
       uses: actions/setup-node@v3
     - run: |
         git fetch --prune --unshallow      
-    - name: Deploy to heroku
+    - name: Deploy to heroku apps
       env:
         HEROKU_DEPLOY_SECRET: ${{secrets.HEROKU_DEPLOY_SECRET}}
         HEROKU_APP_NAME: ${{secrets.HEROKU_APP_NAME}}
